@@ -19,7 +19,7 @@ public class Agendamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idAgendamento;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss") //deixar o atributo nesse formato
-    private LocalDateTime data;
+    private LocalDateTime dataHora;
     @ManyToOne //essas duas annotations ficam do lado que vai ter a chave estrangeira
     @JoinColumn(name = "idUsuarioHemocentro", nullable = false) //JPA criará uma chave estrangeira com isso
     @JsonIgnore

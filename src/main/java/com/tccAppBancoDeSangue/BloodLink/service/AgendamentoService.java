@@ -5,6 +5,7 @@ import com.tccAppBancoDeSangue.BloodLink.repository.AgendamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -17,6 +18,6 @@ public class AgendamentoService {
     }
 
     public List<Agendamento> buscarTodosPorId(Integer idUsuarioHemocentro){
-        return repository.findByIdUsuarioHemocentro_Id(idUsuarioHemocentro);
+        return repository.findByIdUsuarioHemocentro_Id(LocalDateTime.now(), idUsuarioHemocentro);
     }
 }
