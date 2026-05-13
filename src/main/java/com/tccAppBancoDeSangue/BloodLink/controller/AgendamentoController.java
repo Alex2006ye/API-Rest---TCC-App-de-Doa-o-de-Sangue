@@ -39,4 +39,14 @@ public class AgendamentoController {
     public List<Agendamento> listarTodosOsAgendamentosAtivos(@PathVariable Integer idUsuarioHemocentro){
         return service.buscarTodosPorId(idUsuarioHemocentro);
     }
+
+    @GetMapping("/agendamentosAtivosHemo/{idHemo}")
+    public Integer contarAgendamentosAtivosHemo(@PathVariable Integer idHemo){
+        return service.contarTodosAgendamentosValidosHemocentro(idHemo);
+    }
+
+    @GetMapping("/agendamentosValidosDoador/{idDoador}")
+    public Integer contarAgendamentosAtivosDoador(@PathVariable Integer idDoador){
+        return service.contarTodosAgendamentosValidosDoador(idDoador);
+    }
 }

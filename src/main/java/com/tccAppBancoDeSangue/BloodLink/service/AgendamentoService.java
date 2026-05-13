@@ -20,4 +20,12 @@ public class AgendamentoService {
     public List<Agendamento> buscarTodosPorId(Integer idUsuarioHemocentro){
         return repository.findByIdUsuarioHemocentro_Id(LocalDateTime.now(), idUsuarioHemocentro);
     }
+
+    public Integer contarTodosAgendamentosValidosHemocentro(Integer idUsuarioHemocentro){
+        return repository.countByIdUsuarioHemocentro_IdAndDataHoraGreaterThanEqual(LocalDateTime.now(), idUsuarioHemocentro);
+    }
+
+    public Integer contarTodosAgendamentosValidosDoador(Integer idDoador) {
+        return repository.countByIdUsuarioDoador_IdAndDataHoraGreaterThanEqual(LocalDateTime.now(), idDoador);
+    }
 }
