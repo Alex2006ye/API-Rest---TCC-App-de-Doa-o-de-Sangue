@@ -15,4 +15,7 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Intege
             @Param("agora") LocalDateTime agora,
             @Param("idHemocentro") Integer idHemocentro
     );
+    Integer countByIdUsuarioHemocentro_IdAndDataHoraGreaterThanEqual(LocalDateTime agora, Integer idHemocentro);
+
+    Integer countByIdUsuarioDoador_IdAndDataHoraGreaterThanEqual(LocalDateTime now, Integer idDoador);
 }
