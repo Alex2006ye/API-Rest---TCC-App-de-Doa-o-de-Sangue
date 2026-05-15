@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface AgendamentoRepository extends JpaRepository<Agendamento, Integer> {
     // basicamente, listar todos os agendamentos válidos pela data
-    @Query("SELECT a FROM Agendamento a WHERE a.dataHora >= :agora " + "AND a.hemocentro.id = :idHemocentro")
+    @Query("SELECT a FROM Agendamento a WHERE a.dataHora >= :agora " + "AND a.idUsuarioHemocentro.id = :idHemocentro")
     List<Agendamento> findByIdUsuarioHemocentro_Id(
             @Param("agora") LocalDateTime agora,
             @Param("idHemocentro") Integer idHemocentro
@@ -18,4 +18,7 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Intege
     Integer countByIdUsuarioHemocentro_IdAndDataHoraGreaterThanEqual(LocalDateTime agora, Integer idHemocentro);
 
     Integer countByIdUsuarioDoador_IdAndDataHoraGreaterThanEqual(LocalDateTime now, Integer idDoador);
+
+    @Query("SELECT a FROM Agendamento a WHERE a.dataHora >= :agora " + "AND a.idUsuarioDoador.id = :idDoador")
+    List<Agendamento> findByIdUsuarioDoador_Id(@Param("agora") LocalDateTime agora, @Param("idDoador") Integer idDoador);
 }

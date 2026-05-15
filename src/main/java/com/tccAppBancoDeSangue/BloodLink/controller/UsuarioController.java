@@ -8,10 +8,7 @@ import com.tccAppBancoDeSangue.BloodLink.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
@@ -70,5 +67,10 @@ public class UsuarioController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+    }
+
+    @GetMapping("/buscarUsuarioPorId/{id}")
+    public Usuario buscarUsuarioPorId(@PathVariable Integer id){
+        return service.buscarPorId(id);
     }
 }
