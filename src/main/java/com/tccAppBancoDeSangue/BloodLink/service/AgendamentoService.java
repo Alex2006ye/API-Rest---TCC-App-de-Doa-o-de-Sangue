@@ -28,4 +28,12 @@ public class AgendamentoService {
     public Integer contarTodosAgendamentosValidosDoador(Integer idDoador) {
         return repository.countByIdUsuarioDoador_IdAndDataHoraGreaterThanEqual(LocalDateTime.now(), idDoador);
     }
+
+    public List<Agendamento> buscarTodosPorIdDoador(Integer idDoador) {
+        return repository.findByIdUsuarioDoador_Id(LocalDateTime.now(), idDoador);
+    }
+
+    public void deletarAgendamento(Integer idAgendamento) {
+        repository.deleteById(idAgendamento);
+    }
 }

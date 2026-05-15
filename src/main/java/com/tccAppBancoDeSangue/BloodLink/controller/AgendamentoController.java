@@ -45,8 +45,18 @@ public class AgendamentoController {
         return service.contarTodosAgendamentosValidosHemocentro(idHemo);
     }
 
-    @GetMapping("/agendamentosValidosDoador/{idDoador}")
+    @GetMapping("/contarAgendamentosValidosDoador/{idDoador}")
     public Integer contarAgendamentosAtivosDoador(@PathVariable Integer idDoador){
         return service.contarTodosAgendamentosValidosDoador(idDoador);
+    }
+
+    @GetMapping("/agendamentosValidosDoador/{idDoador}")
+    public List<Agendamento> listarAgendamentosValidosUsuarioDoador(@PathVariable Integer idDoador){
+        return service.buscarTodosPorIdDoador(idDoador);
+    }
+
+    @DeleteMapping("/deletarAgendamento/{idAgendamento}")
+    public void deletarAgendamento(@PathVariable Integer idAgendamento){
+        service.deletarAgendamento(idAgendamento);
     }
 }
