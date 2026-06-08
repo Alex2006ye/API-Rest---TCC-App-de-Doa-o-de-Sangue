@@ -1,5 +1,6 @@
 package com.tccAppBancoDeSangue.BloodLink.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,5 +83,10 @@ public class UsuarioController {
     @GetMapping("/buscarUsuarioPorId/{id}")
     public Usuario buscarUsuarioPorId(@PathVariable Integer id){
         return service.buscarPorId(id);
+    }
+
+    @GetMapping("/hemocentros")
+    public List<Usuario> listarHemocentros() {
+        return service.listarHemocentros();
     }
 }

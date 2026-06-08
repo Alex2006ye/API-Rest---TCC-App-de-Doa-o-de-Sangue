@@ -1,12 +1,14 @@
 package com.tccAppBancoDeSangue.BloodLink.service;
 
-import com.tccAppBancoDeSangue.BloodLink.model.Usuario;
-import com.tccAppBancoDeSangue.BloodLink.repository.UsuarioRepository;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-import java.util.function.Supplier;
+import com.tccAppBancoDeSangue.BloodLink.model.TipoUsuario;
+import com.tccAppBancoDeSangue.BloodLink.model.Usuario;
+import com.tccAppBancoDeSangue.BloodLink.repository.UsuarioRepository;
 
 @Service
 public class UsuarioService {
@@ -39,5 +41,9 @@ public class UsuarioService {
 
     public boolean existePeloCnpj(String cnpj){
         return repository.existsByCnpj(cnpj);
+    }
+
+    public List<Usuario> listarHemocentros() {
+    return repository.findByTipoUsuario(TipoUsuario.UsuarioHemocentro);
     }
 }
