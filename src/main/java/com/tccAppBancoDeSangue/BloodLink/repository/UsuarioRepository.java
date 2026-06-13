@@ -1,9 +1,12 @@
 package com.tccAppBancoDeSangue.BloodLink.repository;
 
-import com.tccAppBancoDeSangue.BloodLink.model.Usuario;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import com.tccAppBancoDeSangue.BloodLink.model.TipoUsuario;
+import com.tccAppBancoDeSangue.BloodLink.model.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     public Optional<Usuario> findByEmailAndSenha(String email, String senha);
@@ -11,4 +14,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     boolean existsByEmail(String email);
     boolean existsByCpf(String cpf);
     boolean existsByCnpj(String cnpj);
+    List<Usuario> findByTipoUsuario(TipoUsuario tipoUsuario);
 }

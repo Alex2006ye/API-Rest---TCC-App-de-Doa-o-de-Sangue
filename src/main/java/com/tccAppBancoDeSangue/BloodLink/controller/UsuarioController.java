@@ -1,17 +1,24 @@
 package com.tccAppBancoDeSangue.BloodLink.controller;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
 import com.tccAppBancoDeSangue.BloodLink.dto.LoginDTO;
 import com.tccAppBancoDeSangue.BloodLink.dto.UsuarioDoadorCreateDTO;
 import com.tccAppBancoDeSangue.BloodLink.dto.UsuarioHemocentroCreateDTO;
 import com.tccAppBancoDeSangue.BloodLink.model.Usuario;
 import com.tccAppBancoDeSangue.BloodLink.service.UsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -48,6 +55,10 @@ public class UsuarioController {
         usuario.setCnpj(dto.cnpj());
         usuario.setSenha(dto.senha());
         usuario.setTipoUsuario(dto.tipoUsuario());
+        usuario.setRua(dto.rua());
+        usuario.setBairro(dto.bairro());
+        usuario.setNumero(dto.numero());
+        usuario.setCep(dto.cep());
 
         if(service.existePeloCnpj(usuario.getCnpj()) || service.existePeloEmail(usuario.getEmail())){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Não é possível cadastrar esses valores");
@@ -72,5 +83,10 @@ public class UsuarioController {
     @GetMapping("/buscarUsuarioPorId/{id}")
     public Usuario buscarUsuarioPorId(@PathVariable Integer id){
         return service.buscarPorId(id);
+    }
+
+    @GetMapping("/hemocentros")
+    public List<Usuario> listarHemocentros() {
+        return service.listarHemocentros();
     }
 }

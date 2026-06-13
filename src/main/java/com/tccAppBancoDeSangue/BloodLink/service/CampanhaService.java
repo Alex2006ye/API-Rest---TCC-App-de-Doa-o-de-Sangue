@@ -1,12 +1,13 @@
 package com.tccAppBancoDeSangue.BloodLink.service;
 
-import com.tccAppBancoDeSangue.BloodLink.model.Campanha;
-import com.tccAppBancoDeSangue.BloodLink.repository.CampanhaRepository;
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.List;
+import com.tccAppBancoDeSangue.BloodLink.model.Campanha;
+import com.tccAppBancoDeSangue.BloodLink.repository.CampanhaRepository;
 
 @Service
 public class CampanhaService {
@@ -35,5 +36,9 @@ public class CampanhaService {
 
     public Campanha buscarPorId(Integer id) {
         return repository.findById(id).orElseThrow(() -> new RuntimeException("Campanha não encontrada"));
+    }
+
+    public List<Campanha> buscarPorHemocentro(Integer idHemocentro){
+    return repository.findByIdUsuarioHemocentro_Id(idHemocentro);
     }
 }
