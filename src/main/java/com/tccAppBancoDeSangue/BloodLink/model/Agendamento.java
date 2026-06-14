@@ -36,7 +36,7 @@ public class Agendamento {
     @JsonIgnore
     private Usuario idUsuarioDoador;
     @ManyToOne
-    @JoinColumn(name = "idCampanha")
+    @JoinColumn(name = "idCampanha", nullable = false)
     @JsonIgnore
     private Campanha campanha;
 }
