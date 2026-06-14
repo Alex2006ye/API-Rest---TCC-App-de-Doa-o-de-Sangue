@@ -1,12 +1,13 @@
 package com.tccAppBancoDeSangue.BloodLink.repository;
 
-import com.tccAppBancoDeSangue.BloodLink.model.Agendamento;
+import java.time.LocalDateTime;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import com.tccAppBancoDeSangue.BloodLink.model.Agendamento;
 
 public interface AgendamentoRepository extends JpaRepository<Agendamento, Integer> {
     // basicamente, listar todos os agendamentos válidos pela data
@@ -21,4 +22,6 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Intege
 
     @Query("SELECT a FROM Agendamento a WHERE a.dataHora >= :agora " + "AND a.idUsuarioDoador.id = :idDoador")
     List<Agendamento> findByIdUsuarioDoador_Id(@Param("agora") LocalDateTime agora, @Param("idDoador") Integer idDoador);
+
+    Integer countByCampanha_IdCampanha(Integer idCampanha);
 }
