@@ -1,12 +1,13 @@
 package com.tccAppBancoDeSangue.BloodLink.service;
 
-import com.tccAppBancoDeSangue.BloodLink.model.Agendamento;
-import com.tccAppBancoDeSangue.BloodLink.repository.AgendamentoRepository;
+import java.time.LocalDateTime;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import com.tccAppBancoDeSangue.BloodLink.model.Agendamento;
+import com.tccAppBancoDeSangue.BloodLink.repository.AgendamentoRepository;
 
 @Service
 public class AgendamentoService {
@@ -36,4 +37,13 @@ public class AgendamentoService {
     public void deletarAgendamento(Integer idAgendamento) {
         repository.deleteById(idAgendamento);
     }
+
+    public boolean doadorJaParticipaDaCampanha(Integer idDoador,Integer idCampanha){
+    return repository.existsByIdUsuarioDoador_IdAndCampanha_IdCampanha(
+            idDoador,idCampanha);
+}
+
+public Integer contarParticipantesCampanhas(Integer idHemocentro){
+    return repository.contarParticipantesCampanhas(idHemocentro);
+}
 }
