@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tccAppBancoDeSangue.BloodLink.service.FirebaseService;
+import com.google.firebase.messaging.FirebaseMessagingException;
 import com.tccAppBancoDeSangue.BloodLink.dto.AgendamentoCreateDTO;
 import com.tccAppBancoDeSangue.BloodLink.model.Agendamento;
 import com.tccAppBancoDeSangue.BloodLink.model.Campanha;
@@ -33,8 +35,11 @@ public class AgendamentoController {
     @Autowired
     private CampanhaService serviceCampanha;
 
+    @Autowired
+    private FirebaseService firebaseService;
+
     @PostMapping("/criarAgendamento")
-    public ResponseEntity<Agendamento> criarAgendamento(@RequestBody AgendamentoCreateDTO dto){
+    public ResponseEntity<Agendamento> criarAgendamento(@RequestBody AgendamentoCreateDTO dto) throws FirebaseMessagingException{
         Agendamento agendamento = new Agendamento();
         agendamento.setDataHora(dto.data());
 
@@ -47,7 +52,11 @@ public class AgendamentoController {
         Campanha campanha = serviceCampanha.buscarPorId(dto.idCampanha());
         agendamento.setCampanha(campanha);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.criarAgendamento(agendamento));
+        Agendamento agendamentoCriado = service.criarAgendamento(agendamento);
+
+        firebaseService.sendNotificationToHemocentro(agendamento);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(agendamentoCriado);
     }
 
     @GetMapping("/listarAgendamentos/{idHemo}")

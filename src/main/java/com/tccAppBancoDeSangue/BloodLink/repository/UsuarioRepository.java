@@ -15,4 +15,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     boolean existsByCpf(String cpf);
     boolean existsByCnpj(String cnpj);
     List<Usuario> findByTipoUsuario(TipoUsuario tipoUsuario);
+    List<Usuario> findByTipoSanguineo(String tipoSanguineo);
 }

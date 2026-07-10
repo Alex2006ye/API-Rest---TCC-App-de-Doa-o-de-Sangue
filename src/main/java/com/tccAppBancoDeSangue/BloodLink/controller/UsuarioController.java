@@ -9,12 +9,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.tccAppBancoDeSangue.BloodLink.dto.LoginDTO;
+import com.tccAppBancoDeSangue.BloodLink.dto.UpdateTokenDTO;
 import com.tccAppBancoDeSangue.BloodLink.dto.UsuarioDoadorCreateDTO;
 import com.tccAppBancoDeSangue.BloodLink.dto.UsuarioHemocentroCreateDTO;
 import com.tccAppBancoDeSangue.BloodLink.model.Usuario;
@@ -88,5 +90,11 @@ public class UsuarioController {
     @GetMapping("/hemocentros")
     public List<Usuario> listarHemocentros() {
         return service.listarHemocentros();
+    }
+
+    @PutMapping("/atualizarToken")
+    public ResponseEntity<Void> atualizarTokenFcm(@RequestBody UpdateTokenDTO dto) {
+        service.atualizarTokenFcm(dto.idUsuario(), dto.tokenFcm());
+        return ResponseEntity.ok().build();
     }
 }

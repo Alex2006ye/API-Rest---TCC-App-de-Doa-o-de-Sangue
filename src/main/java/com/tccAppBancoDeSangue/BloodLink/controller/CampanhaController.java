@@ -1,10 +1,12 @@
 package com.tccAppBancoDeSangue.BloodLink.controller;
 
+import com.google.firebase.messaging.FirebaseMessagingException;
 import com.tccAppBancoDeSangue.BloodLink.dto.CampanhaCreateDTO;
 import com.tccAppBancoDeSangue.BloodLink.dto.CampanhaUpdateDTO;
 import com.tccAppBancoDeSangue.BloodLink.model.Campanha;
 import com.tccAppBancoDeSangue.BloodLink.model.Usuario;
 import com.tccAppBancoDeSangue.BloodLink.service.CampanhaService;
+import com.tccAppBancoDeSangue.BloodLink.service.FirebaseService;
 import com.tccAppBancoDeSangue.BloodLink.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,8 @@ public class CampanhaController {
     private CampanhaService service;
     @Autowired
     private UsuarioService usuarioService;
+    @Autowired
+    private FirebaseService firebaseService;
 
     @GetMapping("/campanhasAtivas/{idHemo}")
     public Integer contarCampanhasAtivas(@PathVariable Integer idHemo){
@@ -34,7 +38,7 @@ public class CampanhaController {
     }
 
     @PostMapping("/criarCampanha")
-    public ResponseEntity<Campanha> criarCampanha(@RequestBody CampanhaCreateDTO dto){
+    public ResponseEntity<Campanha> criarCampanha(@RequestBody CampanhaCreateDTO dto) throws FirebaseMessagingException{
         Campanha campanha = new Campanha();
         Usuario usuario = new Usuario();
         usuario = usuarioService.buscarPorId(dto.idUsuarioHemocentro());
@@ -44,7 +48,11 @@ public class CampanhaController {
         campanha.setTipoSanguineoVisado(dto.tipoSanguineo());
         campanha.setIdUsuarioHemocentro(usuario);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.criarCampanha(campanha));
+        Campanha campanhaCriada = service.criarCampanha(campanha);
+
+        firebaseService.sendCampaignNotification(campanha);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(campanhaCriada);
     }
 
     @DeleteMapping("/deletar/{idCampanha}")

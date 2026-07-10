@@ -46,4 +46,12 @@ public class UsuarioService {
     public List<Usuario> listarHemocentros() {
     return repository.findByTipoUsuario(TipoUsuario.UsuarioHemocentro);
     }
+
+    public void atualizarTokenFcm(Integer idUsuario, String tokenFcm) {
+        Usuario usuario = repository.findById(idUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        usuario.setTokenFcm(tokenFcm);
+        repository.save(usuario);
+    }
 }
