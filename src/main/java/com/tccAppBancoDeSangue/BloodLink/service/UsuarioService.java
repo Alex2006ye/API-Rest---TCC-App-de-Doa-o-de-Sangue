@@ -52,6 +52,7 @@ public class UsuarioService {
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         usuario.setTokenFcm(tokenFcm);
+
         repository.save(usuario);
     }
 }

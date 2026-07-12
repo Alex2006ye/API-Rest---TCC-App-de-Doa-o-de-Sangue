@@ -38,7 +38,7 @@ public class CampanhaController {
     }
 
     @PostMapping("/criarCampanha")
-    public ResponseEntity<Campanha> criarCampanha(@RequestBody CampanhaCreateDTO dto) throws FirebaseMessagingException{
+    public ResponseEntity<Void> criarCampanha(@RequestBody CampanhaCreateDTO dto) throws FirebaseMessagingException{
         Campanha campanha = new Campanha();
         Usuario usuario = new Usuario();
         usuario = usuarioService.buscarPorId(dto.idUsuarioHemocentro());
@@ -48,11 +48,11 @@ public class CampanhaController {
         campanha.setTipoSanguineoVisado(dto.tipoSanguineo());
         campanha.setIdUsuarioHemocentro(usuario);
 
-        Campanha campanhaCriada = service.criarCampanha(campanha);
+        service.criarCampanha(campanha);
 
         firebaseService.sendCampaignNotification(campanha);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(campanhaCriada);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/deletar/{idCampanha}")

@@ -38,7 +38,7 @@ public class FirebaseService {
         String title = "Nova Campanha: " + campanha.getNomeCampanha();
         String body = "Venha ver a nova campanha de doação de sangue! Eles precisam do seu tipo sanguíneo: " + campanha.getTipoSanguineoVisado();
 
-        List<Usuario> usuarios = usuarioRepository.findByTipoSanguineo(campanha.getTipoSanguineoVisado().name());
+        List<Usuario> usuarios = usuarioRepository.findByTipoSanguineo(campanha.getTipoSanguineoVisado());
 
         List<String> tokens = usuarios.stream()
                 .map(Usuario::getTokenFcm)

@@ -18,8 +18,8 @@ public class CampanhaService {
         return repository.countByIdUsuarioHemocentro_IdAndDataFimGreaterThanEqual(idHemo, LocalDate.now());
     }
 
-    public Campanha criarCampanha(Campanha campanha){
-        return repository.save(campanha);
+    public void criarCampanha(Campanha campanha){
+        repository.save(campanha);
     }
 
     public Integer contarCampanhasFinalizadas(Integer idHemo) {
