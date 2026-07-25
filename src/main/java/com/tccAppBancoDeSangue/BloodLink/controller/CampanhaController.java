@@ -8,7 +8,6 @@ import com.tccAppBancoDeSangue.BloodLink.model.Usuario;
 import com.tccAppBancoDeSangue.BloodLink.service.CampanhaService;
 import com.tccAppBancoDeSangue.BloodLink.service.FirebaseService;
 import com.tccAppBancoDeSangue.BloodLink.service.UsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +17,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/campanha")
 public class CampanhaController {
-    @Autowired
-    private CampanhaService service;
-    @Autowired
-    private UsuarioService usuarioService;
-    @Autowired
-    private FirebaseService firebaseService;
+    private final CampanhaService service;
+    private final UsuarioService usuarioService;
+    private final FirebaseService firebaseService;
+
+    CampanhaController(CampanhaService service, UsuarioService usuarioService, FirebaseService firebaseService) {
+        this.service = service;
+        this.usuarioService = usuarioService;
+        this.firebaseService = firebaseService;
+    }
 
     @GetMapping("/campanhasAtivas/{idHemo}")
     public Integer contarCampanhasAtivas(@PathVariable Integer idHemo){

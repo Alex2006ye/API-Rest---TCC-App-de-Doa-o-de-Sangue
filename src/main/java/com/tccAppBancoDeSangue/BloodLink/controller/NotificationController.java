@@ -1,7 +1,6 @@
 package com.tccAppBancoDeSangue.BloodLink.controller;
 
 import org.apache.hc.core5.http.HttpStatus;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,8 +14,11 @@ import com.tccAppBancoDeSangue.BloodLink.service.FirebaseService;
 @RestController
 @RequestMapping("/notification")
 public class NotificationController {
-    @Autowired
-    private FirebaseService firebaseService;
+    private final FirebaseService firebaseService;
+
+    NotificationController(FirebaseService firebaseService) {
+        this.firebaseService = firebaseService;
+    }
 
     @PostMapping("/teste")
     public ResponseEntity<Void> sendTestNotification(@RequestBody NotificationDTO dto) {

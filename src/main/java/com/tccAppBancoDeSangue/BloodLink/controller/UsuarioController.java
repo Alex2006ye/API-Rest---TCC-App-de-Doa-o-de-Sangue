@@ -3,7 +3,6 @@ package com.tccAppBancoDeSangue.BloodLink.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +24,11 @@ import com.tccAppBancoDeSangue.BloodLink.service.UsuarioService;
 @RestController
 @RequestMapping("/users")
 public class UsuarioController {
-    @Autowired
-    private UsuarioService service;
+    private final UsuarioService service;
+
+    UsuarioController(UsuarioService service) {
+        this.service = service;
+    }
 
     @PostMapping("/salvarUsuarioDoador")
     public ResponseEntity<Void> salvarUserDoador(@RequestBody UsuarioDoadorCreateDTO dto){

@@ -2,7 +2,6 @@ package com.tccAppBancoDeSangue.BloodLink.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,17 +25,20 @@ import com.tccAppBancoDeSangue.BloodLink.service.UsuarioService;
 @RestController
 @RequestMapping("/agendamento")
 public class AgendamentoController {
-    @Autowired
-    private AgendamentoService service;
+    private final AgendamentoService service;
 
-    @Autowired
-    private UsuarioService serviceUser;
+    private final UsuarioService serviceUser;
 
-    @Autowired
-    private CampanhaService serviceCampanha;
+    private final CampanhaService serviceCampanha;
 
-    @Autowired
-    private FirebaseService firebaseService;
+    private final FirebaseService firebaseService;
+
+   public AgendamentoController(FirebaseService firebaseService, CampanhaService serviceCampanha, AgendamentoService service, UsuarioService serviceUser) {
+        this.serviceUser = serviceUser;
+        this.firebaseService = firebaseService;
+        this.serviceCampanha = serviceCampanha;
+        this.service = service;
+    }
 
     @PostMapping("/criarAgendamento")
     public ResponseEntity<Agendamento> criarAgendamento(@RequestBody AgendamentoCreateDTO dto) throws FirebaseMessagingException{
