@@ -42,6 +42,11 @@ public class AgendamentoController {
 
     @PostMapping("/criarAgendamento")
     public ResponseEntity<Agendamento> criarAgendamento(@RequestBody AgendamentoCreateDTO dto) throws FirebaseMessagingException{
+
+        if(service.doadorJaParticipaDaCampanha(dto.idUsuarioDoador(),dto.idCampanha())){
+        return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+
         Agendamento agendamento = new Agendamento();
         agendamento.setDataHora(dto.data());
 

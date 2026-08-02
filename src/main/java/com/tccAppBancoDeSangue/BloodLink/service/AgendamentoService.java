@@ -36,4 +36,8 @@ public class AgendamentoService {
     public void deletarAgendamento(Integer idAgendamento) {
         repository.deleteById(idAgendamento);
     }
+
+    public boolean doadorJaParticipaDaCampanha(Integer idDoador,Integer idCampanha){
+        return repository.existsByIdUsuarioDoador_IdAndCampanha_IdCampanha(idDoador,idCampanha);
+    }
 }
