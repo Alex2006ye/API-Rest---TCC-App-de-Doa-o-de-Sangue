@@ -26,4 +26,15 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Intege
     Integer countByCampanha_IdCampanha(Integer idCampanha);
 
     boolean existsByIdUsuarioDoador_IdAndCampanha_IdCampanha(Integer idDoador, Integer idCampanha);
+    boolean existsByIdUsuarioDoador_IdAndCampanha_IdCampanha(
+        Integer idDoador, Integer idCampanha);
+
+    @Query("""
+    SELECT COUNT(a)
+    FROM Agendamento a
+    WHERE a.campanha.idUsuarioHemocentro.id = :idHemocentro
+""")
+Integer contarParticipantesCampanhas(
+        @Param("idHemocentro") Integer idHemocentro
+);
 }

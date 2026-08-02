@@ -90,4 +90,10 @@ public class AgendamentoController {
     public void deletarAgendamento(@PathVariable Integer idAgendamento){
         service.deletarAgendamento(idAgendamento);
     }
+
+    @GetMapping("/participantesCampanhas/{idHemocentro}")
+    public Integer contarParticipantesCampanhas(
+        @PathVariable Integer idHemocentro){
+    return service.contarParticipantesCampanhas(idHemocentro);
+    }
 }
