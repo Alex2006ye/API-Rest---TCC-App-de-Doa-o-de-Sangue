@@ -32,4 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 
-/resources/firebase/firebase-adimin.json
+src/main/resources/firebase/firebase-adimin.json
