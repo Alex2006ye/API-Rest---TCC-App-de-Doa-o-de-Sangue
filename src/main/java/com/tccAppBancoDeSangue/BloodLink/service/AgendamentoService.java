@@ -39,6 +39,8 @@ public class AgendamentoService {
     }
 
     public boolean doadorJaParticipaDaCampanha(Integer idDoador,Integer idCampanha){
+        return repository.existsByIdUsuarioDoador_IdAndCampanha_IdCampanha(idDoador,idCampanha);
+    }
     return repository.existsByIdUsuarioDoador_IdAndCampanha_IdCampanha(
             idDoador,idCampanha);
 }

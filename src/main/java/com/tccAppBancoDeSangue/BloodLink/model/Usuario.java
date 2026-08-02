@@ -37,4 +37,8 @@ public class Usuario {
     private TipoSanguineo tipoSanguineo;
     private Integer numero;
     private String bairro;
+    @Column(unique = true, name = "token_fcm", length = 500)
+    private String tokenFcm;
+    @OneToMany(mappedBy = "idUsuarioHemocentro", cascade = CascadeType.ALL)
+    private java.util.List<Campanha> campanhas;
 }

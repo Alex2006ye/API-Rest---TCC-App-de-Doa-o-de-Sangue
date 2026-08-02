@@ -2,7 +2,6 @@ package com.tccAppBancoDeSangue.BloodLink.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tccAppBancoDeSangue.BloodLink.service.FirebaseService;
+import com.google.firebase.messaging.FirebaseMessagingException;
 import com.tccAppBancoDeSangue.BloodLink.dto.AgendamentoCreateDTO;
 import com.tccAppBancoDeSangue.BloodLink.model.Agendamento;
 import com.tccAppBancoDeSangue.BloodLink.model.Campanha;
@@ -24,21 +25,28 @@ import com.tccAppBancoDeSangue.BloodLink.service.UsuarioService;
 @RestController
 @RequestMapping("/agendamento")
 public class AgendamentoController {
-    @Autowired
-    private AgendamentoService service;
+    private final AgendamentoService service;
 
-    @Autowired
-    private UsuarioService serviceUser;
+    private final UsuarioService serviceUser;
 
-    @Autowired
-    private CampanhaService serviceCampanha;
+    private final CampanhaService serviceCampanha;
+
+    private final FirebaseService firebaseService;
+
+   public AgendamentoController(FirebaseService firebaseService, CampanhaService serviceCampanha, AgendamentoService service, UsuarioService serviceUser) {
+        this.serviceUser = serviceUser;
+        this.firebaseService = firebaseService;
+        this.serviceCampanha = serviceCampanha;
+        this.service = service;
+    }
 
     @PostMapping("/criarAgendamento")
-    public ResponseEntity<Agendamento> criarAgendamento(@RequestBody AgendamentoCreateDTO dto){
+    public ResponseEntity<Agendamento> criarAgendamento(@RequestBody AgendamentoCreateDTO dto) throws FirebaseMessagingException{
+
         if(service.doadorJaParticipaDaCampanha(dto.idUsuarioDoador(),dto.idCampanha())){
         return ResponseEntity.status(HttpStatus.CONFLICT).build();
-    }
-        
+        }
+
         Agendamento agendamento = new Agendamento();
         agendamento.setDataHora(dto.data());
 
@@ -51,7 +59,11 @@ public class AgendamentoController {
         Campanha campanha = serviceCampanha.buscarPorId(dto.idCampanha());
         agendamento.setCampanha(campanha);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.criarAgendamento(agendamento));
+        Agendamento agendamentoCriado = service.criarAgendamento(agendamento);
+
+        firebaseService.sendNotificationToHemocentro(agendamento);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(agendamentoCriado);
     }
 
     @GetMapping("/listarAgendamentos/{idHemo}")

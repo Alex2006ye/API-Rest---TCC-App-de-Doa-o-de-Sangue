@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.tccAppBancoDeSangue.BloodLink.model.TipoSanguineo;
 import com.tccAppBancoDeSangue.BloodLink.model.TipoUsuario;
 import com.tccAppBancoDeSangue.BloodLink.model.Usuario;
 
@@ -15,4 +16,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     boolean existsByCpf(String cpf);
     boolean existsByCnpj(String cnpj);
     List<Usuario> findByTipoUsuario(TipoUsuario tipoUsuario);
+    List<Usuario> findByTipoSanguineo(TipoSanguineo tipoSanguineo);
 }
