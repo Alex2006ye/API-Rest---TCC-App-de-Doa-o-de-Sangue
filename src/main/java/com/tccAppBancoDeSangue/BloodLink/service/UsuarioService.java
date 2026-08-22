@@ -55,4 +55,14 @@ public class UsuarioService {
 
         repository.save(usuario);
     }
+
+    public void atualizarLocalizacao(Integer idUsuario, Double latitude, Double longitude) {
+        Usuario usuario = repository.findById(idUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        usuario.setLatitude(latitude);
+        usuario.setLongitude(longitude);
+
+        repository.save(usuario);
+    }
 }
