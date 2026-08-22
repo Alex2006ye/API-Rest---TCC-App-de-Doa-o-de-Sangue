@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.tccAppBancoDeSangue.BloodLink.dto.LoginDTO;
+import com.tccAppBancoDeSangue.BloodLink.dto.UpdateLocationDTO;
 import com.tccAppBancoDeSangue.BloodLink.dto.UpdateTokenDTO;
 import com.tccAppBancoDeSangue.BloodLink.dto.UsuarioDoadorCreateDTO;
 import com.tccAppBancoDeSangue.BloodLink.dto.UsuarioHemocentroCreateDTO;
@@ -52,7 +53,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/salvarUsuarioHemocentro")
-    public ResponseEntity<Void> salvarUserHemocentro(@RequestBody UsuarioHemocentroCreateDTO dto){
+    public ResponseEntity<Usuario> salvarUserHemocentro(@RequestBody UsuarioHemocentroCreateDTO dto){
         Usuario usuario = new Usuario();
         usuario.setNome(dto.nome());
         usuario.setEmail(dto.email());
@@ -70,7 +71,7 @@ public class UsuarioController {
 
         service.salvarUsuarioHemocentro(usuario);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
 
     @PostMapping("/login")
@@ -97,6 +98,12 @@ public class UsuarioController {
     @PutMapping("/atualizarToken")
     public ResponseEntity<Void> atualizarTokenFcm(@RequestBody UpdateTokenDTO dto) {
         service.atualizarTokenFcm(dto.idUsuario(), dto.tokenFcm());
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/atualizarLocalizacao")
+    public ResponseEntity<Void> atualizarLocalizacao(@RequestBody UpdateLocationDTO dto) {
+        service.atualizarLocalizacao(dto.idUsuario(), dto.latitude(), dto.longitude());
         return ResponseEntity.ok().build();
     }
 }

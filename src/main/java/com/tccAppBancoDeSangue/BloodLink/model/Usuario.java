@@ -41,4 +41,6 @@ public class Usuario {
     private String tokenFcm;
     @OneToMany(mappedBy = "idUsuarioHemocentro", cascade = CascadeType.ALL)
     private java.util.List<Campanha> campanhas;
+    private Double latitude;
+    private Double longitude;
 }
