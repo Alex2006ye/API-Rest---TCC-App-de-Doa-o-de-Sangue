@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tccAppBancoDeSangue.BloodLink.model.Campanha;
+import com.tccAppBancoDeSangue.BloodLink.repository.AgendamentoRepository;
 import com.tccAppBancoDeSangue.BloodLink.repository.CampanhaRepository;
 
 @Service
@@ -26,10 +28,6 @@ public class CampanhaService {
         return repository.countByIdUsuarioHemocentro_IdAndDataFimLessThan(idHemo, LocalDate.now());
     }
 
-    public void deletarPorId(Integer idCampanha) {
-        repository.deleteById(idCampanha);
-    }
-
     public List<Campanha> buscarTodasPorId(Integer idUsuarioHemocentro) {
         return repository.findByIdUsuarioHemocentro_Id(idUsuarioHemocentro);
     }
@@ -40,5 +38,14 @@ public class CampanhaService {
 
     public List<Campanha> buscarPorHemocentro(Integer idHemocentro){
     return repository.findByIdUsuarioHemocentro_Id(idHemocentro);
+    }
+
+     @Autowired
+    private AgendamentoRepository agendamentoRepository;
+
+    @Transactional
+    public void deletarPorId(Integer idCampanha) {
+        agendamentoRepository.deletarPorCampanha(idCampanha);
+        repository.deleteById(idCampanha);
     }
 }
