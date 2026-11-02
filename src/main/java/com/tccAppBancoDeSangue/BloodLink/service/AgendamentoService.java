@@ -41,11 +41,8 @@ public class AgendamentoService {
     public boolean doadorJaParticipaDaCampanha(Integer idDoador,Integer idCampanha){
         return repository.existsByIdUsuarioDoador_IdAndCampanha_IdCampanha(idDoador,idCampanha);
     }
-    return repository.existsByIdUsuarioDoador_IdAndCampanha_IdCampanha(
-            idDoador,idCampanha);
-}
 
-public Integer contarParticipantesCampanhas(Integer idHemocentro){
+    public Integer contarParticipantesCampanhas(Integer idHemocentro){
     return repository.contarParticipantesCampanhas(idHemocentro);
 }
 }
