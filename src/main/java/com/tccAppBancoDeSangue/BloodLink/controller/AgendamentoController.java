@@ -61,7 +61,11 @@ public class AgendamentoController {
 
         Agendamento agendamentoCriado = service.criarAgendamento(agendamento);
 
-        firebaseService.sendNotificationToHemocentro(agendamento);
+        try {
+            firebaseService.sendNotificationToHemocentro(agendamento);
+        } catch (FirebaseMessagingException e) {
+            System.err.println("Falha ao enviar notificação: " + e.getMessage());
+        }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(agendamentoCriado);
     }

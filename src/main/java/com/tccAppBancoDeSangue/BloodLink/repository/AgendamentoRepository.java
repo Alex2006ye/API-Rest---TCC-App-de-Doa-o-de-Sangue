@@ -4,9 +4,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.tccAppBancoDeSangue.BloodLink.dto.ParticipanteCampanhaDTO;
 import com.tccAppBancoDeSangue.BloodLink.model.Agendamento;
 
 public interface AgendamentoRepository extends JpaRepository<Agendamento, Integer> {
@@ -36,4 +38,17 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Intege
 Integer contarParticipantesCampanhas(
         @Param("idHemocentro") Integer idHemocentro
 );
+
+    @Query("""
+ SELECT new com.tccAppBancoDeSangue.BloodLink.dto.ParticipanteCampanhaDTO(
+        a.idAgendamento, a.idUsuarioDoador.nome, a.campanha.nomeCampanha, a.dataHora)
+    FROM Agendamento a
+    WHERE a.campanha.idUsuarioHemocentro.id = :idHemocentro
+    ORDER BY a.dataHora
+""")
+List<ParticipanteCampanhaDTO> buscarParticipantesCampanhas(@Param("idHemocentro") Integer idHemocentro);
+
+    @Modifying
+@Query("DELETE FROM Agendamento a WHERE a.campanha.idCampanha = :idCampanha")
+void deletarPorCampanha(@Param("idCampanha") Integer idCampanha);
 }
