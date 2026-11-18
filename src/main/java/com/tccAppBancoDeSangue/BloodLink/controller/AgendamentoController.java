@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tccAppBancoDeSangue.BloodLink.service.FirebaseService;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.tccAppBancoDeSangue.BloodLink.dto.AgendamentoCreateDTO;
+import com.tccAppBancoDeSangue.BloodLink.dto.ParticipanteCampanhaDTO;
 import com.tccAppBancoDeSangue.BloodLink.model.Agendamento;
 import com.tccAppBancoDeSangue.BloodLink.model.Campanha;
 import com.tccAppBancoDeSangue.BloodLink.model.Usuario;
@@ -100,4 +101,12 @@ public class AgendamentoController {
         @PathVariable Integer idHemocentro){
     return service.contarParticipantesCampanhas(idHemocentro);
     }
+
+    @GetMapping("/participantes/{idHemocentro}")
+public List<ParticipanteCampanhaDTO> buscarParticipantesCampanhas(
+        @PathVariable Integer idHemocentro) {
+
+    return service.buscarParticipantesCampanhas(idHemocentro);
+}
+
 }
