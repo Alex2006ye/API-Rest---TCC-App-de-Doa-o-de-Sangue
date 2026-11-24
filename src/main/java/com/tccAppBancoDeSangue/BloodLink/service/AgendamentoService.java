@@ -49,4 +49,8 @@ public class AgendamentoService {
     public List<ParticipanteCampanhaDTO> buscarParticipantesCampanhas(Integer idHemocentro) {
     return repository.buscarParticipantesCampanhas(idHemocentro);
 }
+
+    public boolean horarioJaAgendado(Integer idCampanha, LocalDateTime dataHora) {
+        return repository.existsByCampanha_IdCampanhaAndDataHora(idCampanha, dataHora);
+    }
 }

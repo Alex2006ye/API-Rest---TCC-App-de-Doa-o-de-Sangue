@@ -51,4 +51,6 @@ List<ParticipanteCampanhaDTO> buscarParticipantesCampanhas(@Param("idHemocentro"
     @Modifying
 @Query("DELETE FROM Agendamento a WHERE a.campanha.idCampanha = :idCampanha")
 void deletarPorCampanha(@Param("idCampanha") Integer idCampanha);
+
+boolean existsByCampanha_IdCampanhaAndDataHora(Integer idCampanha, LocalDateTime dataHora);
 }
